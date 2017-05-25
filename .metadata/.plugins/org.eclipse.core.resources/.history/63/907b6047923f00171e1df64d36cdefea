@@ -1,0 +1,49 @@
+var app = angular.module('myApp', ['ngRoute','ngCookies']);
+/*angular.module("chatApp", [
+                           "chatApp.controllers",
+                           "chatApp.services"
+                         ]);
+
+                         angular.module("chatApp.controllers", []);
+                         angular.module("chatApp.services", []);*/
+
+                         
+app.config(function($routeProvider) {
+    $routeProvider
+    .when('/', {
+        templateUrl : 'common/Home.html'
+    })
+    .when('/login', {
+        templateUrl : 'htmlpages/login.html',
+        controller : 'usercontroller'
+    })
+    .when('/register', {
+	templateUrl : 'htmlpages/register.html',
+	controller : 'usercontroller'
+	})
+	.when('/createblog', {
+	templateUrl : 'htmlpages/createnewblog.html',
+	controller : 'blogcontroller'
+	})
+	.when('/updateblog', {
+	templateUrl : 'htmlpages/updateblog.html',
+	controller : 'blogcontroller'
+	})
+	.when('/showallblogs', {
+	templateUrl : 'htmlpages/showallblogs.html',
+	controller : 'blogcontroller'
+	})
+
+	.when('/myprofile', {
+	templateUrl : 'htmlpages/myprofile.html',
+	controller : 'usercontroller'
+	})
+	
+	.when('/updateuser', {
+	templateUrl : 'htmlpages/updateuser.html',
+	controller : 'usercontroller'
+	})
+	.otherwise({
+		redirectTo : '/'
+	});
+});

@@ -1,0 +1,8 @@
+127.0.0.1 - - [05/May/2017:16:21:17 +0530] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:21:20 +0530] "GET /collobrationRS/ HTTP/1.1" 200 57
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:21:32 +0530] "GET /collobrationRS/ HTTP/1.1" 200 57
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:22:02 +0530] "GET /collobrationRS/getUser/1 HTTP/1.1" 200 128
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:22:24 +0530] "GET /collobrationRS/getAllUsers HTTP/1.1" 200 517
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:22:51 +0530] "GET /collobrationRS/getUser/2 HTTP/1.1" 200 161
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:25:41 +0530] "DELETE /collobrationRS/deleteUser/manish1 HTTP/1.1" 200 12
+0:0:0:0:0:0:0:1 - - [05/May/2017:16:25:56 +0530] "GET /collobrationRS/getAllUsers HTTP/1.1" 200 343

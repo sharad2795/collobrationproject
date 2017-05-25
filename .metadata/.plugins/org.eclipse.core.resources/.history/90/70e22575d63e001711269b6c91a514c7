@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="blogcontroller as ctrl">
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>TITLE</th>
+        <th>DESCRIPTION</th>
+        <th>AUTHOR</th>
+        <th>DATE CREATED</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{blogs.title}}</td>
+        <td>{{blogs.description}}</td>
+        <td>{{blogs.user_id}}</td>
+        <td>{{blogs.datecreated}}</td>
+        <td><a href="#/updateuser"><span class="btn btn-success">EDIT DETAILS</span></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+</body>
+</html>

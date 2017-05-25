@@ -1,0 +1,53 @@
+package com.niit.collobration.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
+
+import com.niit.collobration.BaseDomain.BaseDomain;
+
+@Entity
+@Component
+@Table(name="comments")
+public class Comments extends BaseDomain
+{
+	@Id
+	private int id;
+	private String userid;
+	private String blogid;
+	private String forumid;
+	private String message;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getBlogid() {
+		return blogid;
+	}
+	public void setBlogid(String blogid) {
+		this.blogid = blogid;
+	}
+	public String getForumid() {
+		return forumid;
+	}
+	public void setForumid(String forumid) {
+		this.forumid = forumid;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+}

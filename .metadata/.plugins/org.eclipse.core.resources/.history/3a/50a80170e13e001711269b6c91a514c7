@@ -1,0 +1,432 @@
+package com.niit.collobrationRS.restservice;
+
+import java.sql.Date;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.niit.collobration.DAO.BlogDAO;
+import com.niit.collobration.DAO.UserDAO;
+import com.niit.collobration.model.Blog;
+import com.niit.collobration.model.User;
+@RestController
+public class BlogRestService 
+{
+	@Autowired Blog blog;
+	
+	@Autowired BlogDAO blogDAO;
+	
+	@Autowired HttpSession session;
+	
+	@Autowired User user;
+	
+	@Autowired UserDAO	userDAO;
+	
+	private static final Logger log=LoggerFactory.getLogger(BlogRestService.class);
+
+	
+	
+	@PostMapping("/createblog/")
+	public ResponseEntity<Blog> createblog(@RequestBody Blog blog)
+	{
+		String id = (String) session.getAttribute("loggedInUserID");
+		Blog newBlog=blogDAO.getblogbyid(blog.getId());	
+		log.debug("starting of method create blog");
+		
+		if(id==null)
+		{
+			log.debug("user id null in blog");
+			blog.setErrorcode("400");
+			blog.setErrormessage("please login first");
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+		if(newBlog==null)
+		{
+			long d= System.currentTimeMillis();
+			Date today=new Date(d);
+			blog.setId(ThreadLocalRandom.current().nextInt(100,1000000+1));
+			blog.setStatus("P");
+			blog.setDatecreated(today);
+			blog.setUser_id(id);
+			blogDAO.save(blog);
+			log.debug("blog added to database");
+			log.debug("End of method createblog");
+			blog.setErrorcode("200");
+			blog.setErrormessage("blog created successfully");
+			
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+		else
+		{
+			blog.setErrorcode("404");
+			blog.setErrormessage("blog not created");
+			
+			log.debug("blog already exists");
+			log.debug("End of method createblog");
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+	}
+	@PutMapping("/updateblog/")
+	public ResponseEntity<Blog> updateblog(@RequestBody Blog blog)
+	{
+		String id = (String) session.getAttribute("loggedInUserID");
+		Blog newBlog=blogDAO.getblogbyid(blog.getId());
+		log.debug("starting of method updateblog");
+		if(id==null)
+		{
+			log.debug("starting of method 1st if");
+			blog.setErrorcode("400");
+			blog.setErrormessage("please login first");
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+		if(newBlog==null)
+		{
+			log.debug("starting of method 2ndif");
+			blog.setErrorcode("404");
+			blog.setErrormessage("blog not found");
+		}
+		else
+		{
+			log.debug("starting of method 1stelse");
+			if(newBlog.getUser_id().equals(id))
+			{
+				log.debug("starting of method 3rdif");
+				long d= System.currentTimeMillis();
+				Date today=new Date(d);
+				blog.setDatecreated(today);
+				blog.setStatus(newBlog.getStatus());
+				blog.setUser_id(newBlog.getUser_id());
+				if(blog.getTitle()==null || blog.getTitle()=="")
+				{
+					blog.setTitle(newBlog.getTitle());
+				}
+				if(blog.getDescription()==null)
+				{
+					blog.setDescription(newBlog.getDescription());
+				}
+				blogDAO.update(blog);
+				log.debug("after update");
+				blog.setErrorcode("200");
+				blog.setErrormessage("userid is matching ");
+				blog.setErrormessage("blog updated succesfully ");
+			}
+			else
+			{
+				
+				log.debug("starting of method 2ndelse");
+				blog.setErrorcode("406");
+				blog.setErrormessage("user is is not matching");
+			}
+			
+			
+		
+		}
+		return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+	}
+		
+		
+		@DeleteMapping("/deleteblog/{id}")
+		public ResponseEntity<Blog> deleteblog(@PathVariable("id")int bid)
+		{
+			String id = (String) session.getAttribute("loggedInUserID");
+			Blog newBlog=blogDAO.getblogbyid(bid);
+			log.debug("starting of method deleteblog");
+			if(id==null)
+			{
+				log.debug("starting of method 1st if");
+				blog.setErrorcode("400");
+				blog.setErrormessage("please login first");
+				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+			}
+			if(newBlog==null)
+			{
+				log.debug("starting of method 2ndif");
+				blog.setErrorcode("404");
+				blog.setErrormessage("blog not found");
+			}
+			else
+			{
+				log.debug("starting of method 1stelse");
+				if(newBlog.getUser_id().equals(id))
+				{
+					blogDAO.delete(blog);
+					log.debug("after delete");
+					blog.setErrorcode("200");
+					blog.setErrormessage("userid is matching ");
+					blog.setErrormessage("blog deleted succesfully ");
+				}
+				
+				else
+				{
+					log.debug("starting of method 2ndelse");
+					blog.setErrorcode("406");
+					blog.setErrormessage("user is is not matching");
+				}
+		
+			}
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+		@GetMapping("/listallblogs/")
+		public ResponseEntity<List<Blog>> listAllblogs()
+		{
+			List<Blog> bloglist=blogDAO.list();
+		
+			if (bloglist == null) 
+			{
+				user.setErrorcode("404");
+				user.setErrorcode("sorry bloglist is null");
+				
+			}
+			else
+
+			{
+				user.setErrorcode("200");
+				user.setErrormessage("the list of blogs are");
+			}
+			return new ResponseEntity<List<Blog>>(bloglist,HttpStatus.OK);
+		}
+
+		@GetMapping("/listapprovedblogs/")
+		public ResponseEntity<List<Blog>> listapprovedblogs()
+		{
+			List<Blog> bloglist=blogDAO.listapprovedblogs();
+		
+			if (bloglist == null) 
+			{
+				user.setErrorcode("404");
+				user.setErrorcode("sorry bloglist is null");
+				
+			}
+			else
+
+			{
+				user.setErrorcode("200");
+				user.setErrormessage("the list of blogs are");
+			}
+			return new ResponseEntity<List<Blog>>(bloglist,HttpStatus.OK);
+		}
+
+		
+		@GetMapping("/listpendingblogs/")
+		public ResponseEntity<List<Blog>> listpendingblogs()
+		{
+			List<Blog> bloglist=blogDAO.listpendingblogs();
+		
+			if (bloglist == null) 
+			{
+				user.setErrorcode("404");
+				user.setErrorcode("sorry bloglist is null");
+				
+			}
+			else
+
+			{
+				user.setErrorcode("200");
+				user.setErrormessage("the list of blogs are");
+			}
+			return new ResponseEntity<List<Blog>>(bloglist,HttpStatus.OK);
+		}
+
+		@GetMapping("/listrejectedblogs/")
+		public ResponseEntity<List<Blog>> listrejectedblogs()
+		{
+			List<Blog> bloglist=blogDAO.listrejectedblogs();
+		
+			if (bloglist == null) 
+			{
+				user.setErrorcode("404");
+				user.setErrorcode("sorry bloglist is null");
+				
+			}
+			else
+
+			{
+				user.setErrorcode("200");
+				user.setErrormessage("the list of blogs are");
+			}
+			return new ResponseEntity<List<Blog>>(bloglist,HttpStatus.OK);
+		}
+
+		@GetMapping("/listblogsbyuserid/")
+		public ResponseEntity<List<Blog>> listblogsbyuserid()
+		{
+			String id = (String) session.getAttribute("loggedInUserID");
+			
+			List<Blog> bloglist=blogDAO.listblogbyuserid(id);
+		
+			if (bloglist == null) 
+			{
+				user.setErrorcode("404");
+				user.setErrorcode("sorry bloglist is null");
+				
+			}
+			else
+
+			{
+				user.setErrorcode("200");
+				user.setErrormessage("the list of blogs are");
+			}
+			return new ResponseEntity<List<Blog>>(bloglist,HttpStatus.OK);
+		}
+
+
+		@PostMapping("/listblogbyid/")
+		public ResponseEntity<Blog> listblogbyid(@RequestBody Blog blog)
+		{	
+			System.out.println(blog.getId());
+			blog = blogDAO.getblogbyid(blog.getId());
+			if (blog == null) 
+			{
+				blog = new Blog();
+				blog.setErrorcode("404");
+				blog.setErrorcode("sorry bloglist is null");
+				
+			}
+			else
+
+			{
+				blog.setErrorcode("200");
+				blog.setErrormessage("the list of blogs are");
+			}
+			return new ResponseEntity<Blog>(blog,HttpStatus.OK);
+		}
+
+
+		
+		
+		@PutMapping("/approveblog/")
+		public ResponseEntity<Blog> approveblog(@RequestBody Blog blog)
+		{
+			String id = (String) session.getAttribute("loggedInUserID");
+			Blog newBlog=blogDAO.getblogbyid(blog.getId());
+			log.debug("starting of method approveblog");
+			if(id==null)
+			{
+				log.debug("starting of method 1st if");
+				blog.setErrorcode("400");
+				blog.setErrormessage("please login first");
+				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+			}
+			if(newBlog==null)
+			{
+				log.debug("starting of method 2ndif");
+				blog.setErrorcode("404");
+				blog.setErrormessage("blog not found");
+			}
+			else
+			{
+				user=userDAO.getuserbyid(id);
+				log.debug("starting of method 1stelse");
+				System.out.println(user.getRole());
+				if(user.getRole().equals("admin"))
+				{
+					log.debug("starting of method 3rdif");
+					blog.setDatecreated(newBlog.getDatecreated());
+					blog.setStatus("approved");
+					blog.setUser_id(newBlog.getUser_id());
+					if(blog.getTitle()==null || blog.getTitle()=="")
+					{
+						blog.setTitle(newBlog.getTitle());
+					}
+					if(blog.getDescription()==null)
+					{
+						blog.setDescription(newBlog.getDescription());
+					}
+					blogDAO.update(blog);
+					log.debug("after update");
+					blog.setErrorcode("200");
+					blog.setErrormessage("userid is matching ");
+					blog.setErrormessage("blog updated succesfully ");
+				}
+				else
+				{
+					
+					log.debug("starting of method 2ndelse");
+					blog.setErrorcode("406");
+					blog.setErrormessage("user is is not matching");
+				}
+				
+				
+			
+			}
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+			
+		@PutMapping("/rejectblog/")
+		public ResponseEntity<Blog> rejectblog(@RequestBody Blog blog)
+		{
+			String id = (String) session.getAttribute("loggedInUserID");
+			Blog newBlog=blogDAO.getblogbyid(blog.getId());
+			log.debug("starting of method rejectblog");
+			if(id==null)
+			{
+				log.debug("starting of method 1st if");
+				blog.setErrorcode("400");
+				blog.setErrormessage("please login first");
+				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+			}
+			if(newBlog==null)
+			{
+				log.debug("starting of method 2ndif");
+				blog.setErrorcode("404");
+				blog.setErrormessage("blog not found");
+			}
+			else
+			{
+				user=userDAO.getuserbyid(id);
+				log.debug("starting of method 1stelse");
+				System.out.println(user.getRole());
+				if(user.getRole().equals("admin"))
+				{
+					log.debug("starting of method 3rdif");
+					blog.setDatecreated(newBlog.getDatecreated());
+					blog.setStatus("rejected");
+					blog.setUser_id(newBlog.getUser_id());
+					if(blog.getTitle()==null || blog.getTitle()=="")
+					{
+						blog.setTitle(newBlog.getTitle());
+					}
+					if(blog.getDescription()==null)
+					{
+						blog.setDescription(newBlog.getDescription());
+					}
+					blogDAO.update(blog);
+					log.debug("after update");
+					blog.setErrorcode("200");
+					blog.setErrormessage("userid is matching ");
+					blog.setErrormessage("blog updated succesfully ");
+				}
+				else
+				{
+					
+					log.debug("starting of method 2ndelse");
+					blog.setErrorcode("406");
+					blog.setErrormessage("user is is not matching");
+				}
+				
+				
+			
+			}
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}
+			
+
+
+}

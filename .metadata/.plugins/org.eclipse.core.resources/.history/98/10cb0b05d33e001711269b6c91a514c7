@@ -1,0 +1,77 @@
+'use strict';
+
+app.controller('blogcontroller',['$scope','blogservice','$location','$rootScope','$cookieStore','$http',
+						function($scope, blogservice, $location, $rootScope,$cookieStore, $http)
+						{
+							console.log("inside blogController...")
+						//	var this = this;
+							this.blog = {
+								id : '',
+								title: '',
+								description: '',
+								datecreated: '',
+								status: '',
+								comments: '',
+								errorcode : '',
+								errormessage : '',
+								
+							};
+							
+
+	
+							/*	this.fetchAllUsers = function()
+								{
+									console.log("fetchAllUsers...")
+									userservice
+											.fetchAllUsers()
+											.then(
+													function(d) {
+														this.users = d;
+													},
+													function(errResponse) {
+														console.error('Error while fetching Users');
+													});
+								};*/
+
+
+							this.createblog = function(blog) {
+								console.log("createblogr...")
+								blogservice.createblog(blog)
+										.then(
+												function(d) {
+													alert("blog created")
+													$location.path("/")
+												},
+												function(errResponse) {
+													console
+															.error('Error while creating blog.');
+												});
+							};
+
+							
+							this.submit = function() {
+								{
+									console.log('Saving New blog', this.blog);
+									this.createblog(this.blog);
+								}
+							};
+							
+							
+							this.reset = function() {
+								this.user = {
+									id : '',
+									name : '',
+									password : '',
+									confirmpassword : '',
+									contact : '',
+									address : '',
+									email : '',
+									role:'',
+									errorcode : '',
+									errormessage : ''
+								};
+								$scope.myForm.$setPristine(); // reset Form
+							};
+							
+} ]);
+

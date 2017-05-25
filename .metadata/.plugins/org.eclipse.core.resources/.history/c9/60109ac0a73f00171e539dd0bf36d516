@@ -1,0 +1,23 @@
+package com.niit.collobration.DAO;
+
+import java.util.List;
+
+import com.niit.collobration.model.comments;
+
+public interface CommentsDAO 
+{
+	public List<comments> getcommentsList();
+	
+	public comments getCommentByID(int id);
+	
+	public List<comments> getcommentsListByBlog(int id);
+	
+	public List<comments> getcommentsListByForum(int id);
+	
+	public boolean saveComment(comments comments);
+	
+	public boolean updateComment(comments comments);
+	
+	public boolean deleteComment(comments comments);
+
+}

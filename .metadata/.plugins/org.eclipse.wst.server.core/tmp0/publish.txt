@@ -1,4 +1,4 @@
 #Tomcat publish data
-#Tue May 23 17:46:21 IST 2017
+#Wed May 31 17:30:09 IST 2017
 org.eclipse.jst.j2ee.server\:collobrationBE=WEB-INF/lib/collobration-0.0.1-SNAPSHOT.jar
 org.eclipse.jst.j2ee.server\:/binary\:C\:\\Users\\Lenovo\\.m2\\repository\\org\\springframework\\spring-web\\4.3.7.RELEASE\\spring-web-4.3.7.RELEASE.jar=WEB-INF/lib/spring-web-4.3.7.RELEASE.jar

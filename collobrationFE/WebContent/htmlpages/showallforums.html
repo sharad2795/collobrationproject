@@ -5,32 +5,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div ng-controller="forumcontroller as ctrl">
+<div ng-controller="forumcontroller as ctrl" ng-show="forums.length">
 <div ng-controller="blogcontroller as bctrl">
-<div class="container">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>TOPIC</th>
-        <th>AUTHOR</th>
-        <th>DATE CREATED</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="forum in forums">
-        <td>{{forum.topic}}</td>
-        <td>{{forum.userid}}</td>
-        <td>{{forum.dateadded}}</td>
-        <td ng-repeat="comment in comments" ng-if="forum.id==comment.forumid">{{comment.message}}</td>
-        <td><a href="#/createnewcomment" ng-click="bctrl.forumcomment(forum.id)"><span class="btn btn-success">ADD COMMENTS</span></a></td>
-        <td><a href="#" ng-click="ctrl.update(forum.id)"><span class="btn btn-success">EDIT DETAILS</span></a></td>
-        <td><a href="#" ng-click="ctrl.remove(forum.id)"><span class="btn btn-success">DELETE BLOG</span></a></td>
-      </tr>
-    </tbody>
-  </table>
+<div ng-hide="forums.length"><center><h1>No Forums To Display</h1></center></div>
+<div class="row">
+<div ng-repeat="forum in forums">
+    <div class="col-xs-12 col-md-12">
+      <div class="thumbnail">
+          <div class="caption">
+          <center><b><h1>{{forum.topic}}</h1></b></center>
+          <h4 align="left">Author : {{forum.userid}}</h4>										
+          <h4 align="right">DateCreated : {{forum.dateadded}}</h4>
+          <h4>Comments:<p><div ng-repeat="comment in comments" ng-if="forum.id == comment.forumid">{{comment.userid}} : {{comment.message}}</div></p></h4>
+          <a ng-hide="currentUser.id" href="#/login" ng-click="bctrl.forumcomment(forum.id)" class="btn btn-success">Add Comments</a>
+          <a ng-show="currentUser.id" href="#/createnewcomment" ng-click="bctrl.forumcomment(forum.id)" class="btn btn-success">Add Comments</a>
+          <a href="#" ng-if="forum.userid==currentUser.id" ng-click="ctrl.update(forum.id)"><span class="glyphicon glyphicon-pencil btn btn-success">&nbsp;Edit</span></a>
+          <a href="#" ng-if="forum.userid==currentUser.id" ng-click="ctrl.remove(forum.id)"><span class="glyphicon glyphicon-trash btn btn-warning">&nbsp;Delete</span></a>
+          </div>
+          </div>
+          </div>
+    </div>
+    </div>
+ 
 </div>
-
 </div>
 </body>
 </html>

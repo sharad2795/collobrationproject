@@ -31,6 +31,18 @@ public class User extends BaseDomain
 	
 	private String contact;
 	
+	private String isonline;
+	
+	
+	
+	public String getIsonline() {
+		return isonline;
+	}
+
+	public void setIsonline(String isonline) {
+		this.isonline = isonline;
+	}
+
 	public String getId() {
 		return id;
 	}

@@ -1,1 +1,6 @@
+com\niit\collobrationRS\restservice\ChatRestService.class
+com\niit\collobrationRS\restservice\CommentsRestService.class
+com\niit\collobrationRS\restservice\FriendRestService.class
 com\niit\collobrationRS\restservice\UserRestService.class
+com\niit\collobrationRS\restservice\BlogRestService.class
+com\niit\collobrationRS\restservice\ForumRestService.class

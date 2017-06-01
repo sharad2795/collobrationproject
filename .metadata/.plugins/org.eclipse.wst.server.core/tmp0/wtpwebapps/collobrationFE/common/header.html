@@ -8,10 +8,12 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#/">HOME</a></li>
+      <li class="active" ng-show="currentUser.id"><a href="#/chat">Chat</a></li>
       <li class="active"><a href="#" ng-click="bctrl.displayfetchallblogs()">BLOGS</a></li>
       <li class="active"><a href="#" ng-click="fctrl.displayfetchallforums()">FORUMS</a></li>
       <li ng-hide="currentUser.id"><a href="#/login">LOGIN</a></li>
       <li ng-hide="currentUser.id"> <a href="#/register">REGISTER</a></li>
+      <li ng-show="currentUser.id"><a href="#" ng-click="ctrl.fetchAllUsers()">SHOW ALL USERS</a></li>
       <li ng-show="currentUser.id"><a href="#/createblog">CREATENEWBLOG</a></li>
 	  <li ng-show="currentUser.id"><a href="#/createforum">CREATENEWFORUM</a></li>
 	  <li ng-show="currentUser.id"><a href="#/" ng-click="ctrl.logout()">welcome:{{currentUser.name}}|LOGOUT</a></li>

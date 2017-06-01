@@ -1,0 +1,5 @@
+package com.niit.collobration.DAOimpl;
+
+public class FriendDAO {
+
+}

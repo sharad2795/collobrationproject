@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="forumid" key="selection"/>
+		<item value="Starting of savefriend" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="Starting of savefriend"/>
+			<item value="autofocus=&quot;&quot;"/>
 			<item value="blogid"/>
 			<item value="ErrorMessage"/>
 			<item value="ErrorCode"/>
 			<item value="Comments"/>
 			<item value="approve"/>
 			<item value="blog"/>
-			<item value="starting"/>
-			<item value="newuser"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="forumid"/>
 			<item value="Errormessage"/>
 			<item value="Errorcode"/>
@@ -25,7 +26,6 @@
 			<item value="reject"/>
 			<item value="forum"/>
 			<item value="newUser"/>
-			<item value="job"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.niit.collobration.model.Blog;
 import com.niit.collobration.model.Comments;
 import com.niit.collobration.model.Forum;
+import com.niit.collobration.model.Friend;
 import com.niit.collobration.model.Job;
 import com.niit.collobration.model.User;
 
@@ -70,6 +71,7 @@ public class ApplicationContextConfig {
 		sessionBuilder.addAnnotatedClass(Job.class);
 		sessionBuilder.addAnnotatedClass(Forum.class);
 		sessionBuilder.addAnnotatedClass(Comments.class);
+		sessionBuilder.addAnnotatedClass(Friend.class);
 		logger.debug("Ending of the method getSessionFactory");
 		return sessionBuilder.buildSessionFactory();
 	}

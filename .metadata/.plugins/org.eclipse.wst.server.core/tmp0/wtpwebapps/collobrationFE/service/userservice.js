@@ -11,7 +11,7 @@ app.service('userservice', ['$http', '$q','$rootScope', function($http, $q,$root
 		fetchAllUsers: function()
 		{
         	console.log("calling fetchAllUsers ")
-                return $http.get(BASE_URL+'/listAllUsersNotFriends')
+                return $http.get(BASE_URL+'getAllUsers')
                         .then(
                                 function(response)
                                 {
@@ -59,8 +59,7 @@ app.service('userservice', ['$http', '$q','$rootScope', function($http, $q,$root
             authenticate: function(user)
             {
          	   console.log("Calling the method authenticate with the user :"+user)
-       		 
-             return $http.post(BASE_URL+'login',user)
+         	   return $http.post(BASE_URL+'login',user)
                      .then(
                              function(response)
                              {

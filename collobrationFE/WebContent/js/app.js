@@ -17,10 +17,19 @@ app.config(function($routeProvider) {
         templateUrl : 'htmlpages/login.html',
         controller : 'usercontroller'
     })
+    .when('/chat', {
+        templateUrl : 'htmlpages/Chat.html',
+        controller : 'ChatController'
+    })
     .when('/register', {
 	templateUrl : 'htmlpages/register.html',
 	controller : 'usercontroller'
 	})
+	   .when('/showallusers', {
+        templateUrl : 'htmlpages/showallusers.html',
+        controller : 'usercontroller'
+    })
+
 	.when('/createblog', {
 	templateUrl : 'htmlpages/createnewblog.html',
 	controller : 'blogcontroller'

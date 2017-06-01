@@ -49,7 +49,8 @@ app.controller('usercontroller',['$scope','userservice','$location','$rootScope'
 											.fetchAllUsers()
 											.then(
 													function(d) {
-														this.users = d;
+														$rootScope.users=d;
+														$location.path("/showallusers")
 													},
 													function(errResponse) {
 														console.error('Error while fetching Users');
@@ -114,7 +115,6 @@ app.controller('usercontroller',['$scope','userservice','$location','$rootScope'
 									console.log('Saving New User', this.user);
 									this.createUser(this.user);
 								}
-								this.reset();
 							};
 							
 							this.update=function(){

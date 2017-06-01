@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="usercontroller as ctrl">
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>USERID</th>
+        <th>USER NAME</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users">
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+
+        <td><a href="#" ng-click="ctrl.update(blog.id)"><span class="btn btn-success">ADD FRIEND</span></a></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+</div>
+</body>
+</html>

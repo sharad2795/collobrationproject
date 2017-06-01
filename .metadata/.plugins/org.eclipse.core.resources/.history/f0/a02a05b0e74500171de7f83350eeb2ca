@@ -1,0 +1,46 @@
+package com.niit.collobration.DAOimpl;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.niit.collobration.model.Friend;
+@Transactional
+@EnableTransactionManagement
+@Repository("friendDAO")
+public class FriendDAO implements com.niit.collobration.DAO.FriendDAO
+{
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	public List<Friend> list() 
+	{
+		sessionFactory.getCurrentSession().createQuery("from Friend")
+	}
+
+	public boolean save(Friend friend) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean delete(Friend friend) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Friend fetchfriendsbyid(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Friend fetchfriendbyuserid(String userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

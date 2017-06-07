@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="jobapplicationcontroller as ctrl">
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>FULLNAME</th>
+        <th>EMAIL</th>
+        <th>CONTACT</th>
+        <th>QUALIFICATIONS</th>
+        <th>10TH MARKS</th>
+        <th>12TH MARKS</th>
+        <th>UG MARKS</th>
+        <th>EXPERIENCE</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="x in jobapplications">
+        <td>{{x.firstname}}&nbsp;{{x.lastname}}</td>
+        <td>{{x.email}}</td>
+        <td>{{x.contact}}</td>
+        <td>{{x.qualifications}}</td>
+        <td>{{x.marks10th}}</td>
+        <td>{{x.marks12th}}</td>
+        <td>{{x.ugmarks}}</td>
+        <td>{{x.experience}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+</body>
+</html>

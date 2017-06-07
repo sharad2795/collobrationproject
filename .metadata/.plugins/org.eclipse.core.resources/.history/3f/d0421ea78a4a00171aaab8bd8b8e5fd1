@@ -1,0 +1,39 @@
+package com.niit.collobration.DAO;
+
+import java.util.List;
+
+import com.niit.collobration.model.Friend;
+
+public interface FriendDAO 
+{
+	//select * from Friend where userID =? and status ='A'
+		public List<Friend> getMyFriends(String userid);
+		
+		public Friend get(String userid, String friend_id);
+		
+		
+		public Friend get(String friend_ID);
+		
+		
+		//If you want to get all details of you friend
+		//You can use get(userID) of UserDAO interface
+
+
+		public boolean save(Friend friend);
+		
+		public boolean update(Friend friend);
+
+		public void delete(String userid, String friend_id);
+		
+		//select * from Friend where friendID = ? and status ='N'
+		public List<Friend> getNewFriendRequests(String userid);
+		
+		public void setOnline(String userid);
+		
+		public void setOffLine(String userid);
+		
+		//select * from Friend where userID=? status = 'N'
+		public List<Friend> getRequestsSendByMe(String userid);
+		
+
+}

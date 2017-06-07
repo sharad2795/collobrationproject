@@ -5,7 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -16,6 +19,7 @@ import com.niit.collobration.model.Friend;
 @Repository("friendDAO")
 public class FriendDAOimpl implements com.niit.collobration.DAO.FriendDAO
 {
+	private static final Logger log = LoggerFactory.getLogger(FriendDAOimpl.class);	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -23,40 +27,71 @@ public class FriendDAOimpl implements com.niit.collobration.DAO.FriendDAO
 	{
 		this.sessionFactory=sessionFactory;
 	}
-	public List<Friend> list() 
-	{
+	
+	public List<Friend> fetchAllFriends() {
 		return sessionFactory.getCurrentSession().createQuery("from Friend").list();
 	}
 
-	public boolean save(Friend friend) 
-	{
-		try {
+	public List<Friend> fetchAllFriendsByUserId(String id) {
+		return sessionFactory.getCurrentSession().createQuery("from Friend where userid='"+id+"'").list();
+	}
+
+	public Boolean saveFriend(Friend friend) {
+		try 
+		{
 			sessionFactory.getCurrentSession().save(friend);
 			return true;
-		} catch (Exception e) {
+		}
+		catch (HibernateException e) 
+		{
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public boolean delete(Friend friend) {
-		try {
+	public Boolean deleteFriend(Friend friend) {
+		try 
+		{
 			sessionFactory.getCurrentSession().delete(friend);
 			return true;
-		} catch (Exception e) {
+		}
+		catch (HibernateException e) 
+		{
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public Friend fetchfriendsbyid(int id)
-	{
+	public Friend getFriendById(int id) {
 		return (Friend) sessionFactory.getCurrentSession().get(Friend.class, id);
 	}
 
-	public List<Friend> fetchfriendbyuserid(String userid)
-	{
-		return  sessionFactory.getCurrentSession().createQuery("from Friend where userid='"+userid+"'").list();	
+	public List<Friend> fetchAllApprovedFriends(String userid) {
+		return sessionFactory.getCurrentSession().createQuery("from Friend where status = 'Approved' and userid='"+userid+"'").list();
+	}
 
+	public List<Friend> fetchAllPendingFriends(String friend_id) {
+		return sessionFactory.getCurrentSession().createQuery("from Friend where status = 'Pending' and friend_id='"+friend_id+"'").list();
+	}
+
+	public List<Friend> fetchAllRejectFriends(String userid) {
+		return sessionFactory.getCurrentSession().createQuery("from Friend where status = 'Rejected' and userid='"+userid+"'").list();
+	}
+
+	public Boolean updateFriend(Friend friend) {
+		try 
+		{
+			sessionFactory.getCurrentSession().update(friend);
+			return true;
+		}
+		catch (HibernateException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public List<Friend> fetchAllPendingFriendsByUserid(String userid) {
+		return sessionFactory.getCurrentSession().createQuery("from Friend where status = 'Pending' and userid='"+userid+"'").list();
 	}
 }

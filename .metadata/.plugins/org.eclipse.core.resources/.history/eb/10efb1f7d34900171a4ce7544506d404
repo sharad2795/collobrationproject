@@ -1,0 +1,112 @@
+'use strict';
+ 
+app.service('friendservice', ['$http', '$q','$rootScope', function($http, $q,$rootScope){
+	
+	console.log("friendService...")
+	
+	var BASE_URL='http://localhost:8008/collobrationRS/'
+		
+		return {
+        
+		getMyFriends: function() {
+                    return $http.get(BASE_URL+'myFriends')
+                            .then(
+                                    function(response){
+                                        return response.data;
+                                    }, 
+                                   null
+                            );
+            },
+             
+            sendFriendRequest: function(friend_id){
+                    return $http.get(BASE_URL+'addFriend/'+friend_id)
+                            .then(
+                                    function(response){
+                                    	if(response.data.errorcode==404)
+                                    	{
+                                    		alert(response.data.errormessage)
+                                    	}
+                                        return response.data;
+                                    }, 
+                                    function(errResponse){
+                                        console.error('Error while creating friend');
+                                        return $q.reject(errResponse);
+                                    }
+                            );
+            },
+            
+            getMyFriendRequests: function(){
+                return $http.get(BASE_URL+'getMyFriendRequests/')
+                        .then(
+                                function(response){
+                                    return response.data;
+                                }, 
+                                function(errResponse){
+                                    console.error('Error while creating friend');
+                                    return $q.reject(errResponse);
+                                }
+                        );
+        },
+        
+        acceptFriendRequest: function(friend_id){
+        	console.log("Starting of the method acceptFriendRequest")
+            return $http.get(BASE_URL+'accepttFriend/'+friend_id)
+                    .then(
+                            function(response){
+                                return response.data;
+                            }, 
+                            function(errResponse){
+                                console.error('Error while creating acceptFriendRequest');
+                                return $q.reject(errResponse);
+                            }
+                    );
+    },
+         
+    rejectFriendRequest: function(friend_id){
+    	console.log("Starting of the method rejectFriendRequest")
+        return $http.get(BASE_URL+'getMyFriendRequests/'+friend_id)
+                .then(
+                        function(response){
+                            return response.data;
+                        }, 
+                        function(errResponse){
+                            console.error('Error while rejectFriendRequest');
+                            return $q.reject(errResponse);
+                        }
+                );
+},
+     
+unFriend: function(friend_id){
+	console.log("Starting of the method unFriend")
+    return $http.get(BASE_URL+'getMyFriendRequests/'+friend_id)
+            .then(
+                    function(response){
+                        return response.data;
+                    }, 
+                    function(errResponse){
+                        console.error('Error while unFriend ');
+                        return $q.reject(errResponse);
+                    }
+            );
+},
+ 
+             
+        //Not required because we are not deleting the record
+            deleteFriend: function(id){
+                    return $http.delete(BASE_URL+'friend/'+id)
+                            .then(
+                                    function(response){
+                                        return response.data;
+                                    }, 
+                                    function(errResponse){
+                                        console.error('Error while deleting friend');
+                                        return $q.reject(errResponse);
+                                    }
+                            );
+            }
+            
+           
+         
+    };
+ 
+}]);

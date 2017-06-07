@@ -1,6 +1,8 @@
 <div ng-controller="usercontroller as ctrl">
 <div ng-controller="blogcontroller as bctrl">
 <div ng-controller="forumcontroller as fctrl">
+<div ng-controller="friendcontroller as fdctrl">
+<div ng-controller="jobcontroller as jctrl">
 <nav class="navbar navbar-inverse" style="color:blue">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -13,6 +15,8 @@
       <li class="active"><a href="#" ng-click="fctrl.displayfetchallforums()">FORUMS</a></li>
       <li ng-hide="currentUser.id"><a href="#/login">LOGIN</a></li>
       <li ng-hide="currentUser.id"> <a href="#/register">REGISTER</a></li>
+      <li ng-show="currentUser.id"><a href="#" ng-click="jctrl.fetchalljobs()">JOBS</a></li>
+       <li ng-show="currentUser.id"><a href="#" ng-click="fdctrl.fetch()">SHOW ALL FRIENDS</a></li>
       <li ng-show="currentUser.id"><a href="#" ng-click="ctrl.fetchAllUsers()">SHOW ALL USERS</a></li>
       <li ng-show="currentUser.id"><a href="#/createblog">CREATENEWBLOG</a></li>
 	  <li ng-show="currentUser.id"><a href="#/createforum">CREATENEWFORUM</a></li>

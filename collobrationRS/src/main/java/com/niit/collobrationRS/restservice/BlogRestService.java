@@ -62,7 +62,7 @@ public class BlogRestService
 			long d= System.currentTimeMillis();
 			Date today=new Date(d);
 			blog.setId(ThreadLocalRandom.current().nextInt(100,1000000+1));
-			blog.setStatus("P");
+			blog.setStatus("pending");
 			blog.setDatecreated(today);
 			blog.setUser_id(id);
 			blogDAO.save(blog);

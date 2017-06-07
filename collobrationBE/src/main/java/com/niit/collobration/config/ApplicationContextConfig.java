@@ -22,6 +22,7 @@ import com.niit.collobration.model.Comments;
 import com.niit.collobration.model.Forum;
 import com.niit.collobration.model.Friend;
 import com.niit.collobration.model.Job;
+import com.niit.collobration.model.Jobapplication;
 import com.niit.collobration.model.User;
 
 
@@ -69,6 +70,7 @@ public class ApplicationContextConfig {
 		sessionBuilder.addAnnotatedClass(User.class);
 		sessionBuilder.addAnnotatedClass(Blog.class);
 		sessionBuilder.addAnnotatedClass(Job.class);
+		sessionBuilder.addAnnotatedClass(Jobapplication.class);
 		sessionBuilder.addAnnotatedClass(Forum.class);
 		sessionBuilder.addAnnotatedClass(Comments.class);
 		sessionBuilder.addAnnotatedClass(Friend.class);

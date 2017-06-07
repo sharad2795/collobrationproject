@@ -1,0 +1,27 @@
+package com.niit.collobration.DAO;
+
+import java.util.List;
+
+import com.niit.collobration.model.Job;
+
+public interface JobDAO 
+{
+	public List<Job> list();
+	
+	public boolean save(Job job);
+	
+	public boolean update(Job job);
+	
+	public Job getjobbyid(int id);
+	
+	public boolean delete(Job job);
+	
+	public List<Job> getjobbyuserid(String userid);
+	
+	public List<Job> getavailablejobs(Job job);
+	
+
+	
+	
+	
+}

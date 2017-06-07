@@ -56,13 +56,37 @@ app.config(function($routeProvider) {
 	templateUrl : 'htmlpages/adminpages/pendingblogs.html',
 	controller : 'blogcontroller'
 	})
-	
+	.when('/friends', {
+	templateUrl : 'htmlpages/friends.html',
+	controller : 'friendcontroller'
+	})
+		
 	.when('/admin', {
 	templateUrl : 'htmlpages/adminpages/admin.html',
 	controller : 'usercontroller',
 	controller : 'blogcontroller'
 	})
-	
+	.when('/showalljobs', {
+        templateUrl : 'htmlpages/showalljobs.html',
+        controller : 'jobcontroller'
+    })
+    .when('/editJob', {
+        templateUrl : 'htmlpages/editjobs.html',
+        controller : 'jobcontroller'
+    })
+    .when('/applyjob', {
+        templateUrl : 'htmlpages/applyforjob.html',
+        controller : 'jobapplicationcontroller'
+    })
+    .when('/displayJobApplications', {
+        templateUrl : 'htmlpages/showjobapplications.html',
+        controller : 'jobapplicationcontroller'
+    })
+	.when('/postjob', {
+        templateUrl : 'htmlpages/createjob.html',
+        controller : 'jobcontroller'
+    })
+    
 	.when('/showallblogs', {
 	templateUrl : 'htmlpages/showallblogs.html',
 	controller : 'blogcontroller'
@@ -81,6 +105,11 @@ app.config(function($routeProvider) {
 	controller : 'blogcontroller',
 	controller : 'forumcontroller'
 	})
+	.when('/friendRequest', {
+	templateUrl : 'htmlpages/friendrequest.html',
+	controller : 'friendcontroller'
+	})
+	
 	
 	.when('/updateuser', {
 	templateUrl : 'htmlpages/updateuser.html',

@@ -64,6 +64,11 @@ app.controller('usercontroller',['$scope','userservice','$location','$rootScope'
 										.then(
 												function(d) 
 												{
+													if(d.errorcode==410)
+													{
+														alert("passwrod not matching")
+														$location.path("/register")	
+													}
 													if(d.errorcode==200)
 													{
 													alert("you have registered succesfully")

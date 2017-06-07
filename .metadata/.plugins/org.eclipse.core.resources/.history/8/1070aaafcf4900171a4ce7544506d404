@@ -1,0 +1,139 @@
+'use strict';
+ 
+app.controller('friendcontroller', ['userservice','$scope', 'friendservice','$location',
+   '$rootScope',function(userservice,$scope, friendservice,$location,$routeParams,$rootScope) {
+	console.log("FriendController...")
+          var self = this;
+          self.friend={id:'',userid:'',friend_id:'',status:''};
+          self.friends=[];
+          
+          self.user = {	
+        		  	id : '',
+					name : '',
+					password : '',
+					confirmpassword : '',
+					contact : '',
+					address : '',
+					email : '',
+					role : '',
+					isonline:'',
+					errorcode : '',
+					errormessage : '',
+					
+  			};
+  			self.users = [];
+  			
+  			
+  			
+  			  				
+
+  		         self.getMyFriendRequests = function(){
+  		              friendservice.getMyFriendRequests()
+  		                      .then(
+  		                             function(d)
+  		                             {
+  		                            	 self.friends = d;
+  		                            	 
+  		                            	 $location.path="/viewFriendRequest";
+  		                            	 
+  		                             },
+  		                              function(errResponse){
+  		                                   console.error('Error while updating Friend.');
+  		                              } 
+  		                  );
+  		          };
+  		 
+          
+         self.sendFriendRequest=sendFriendRequest
+         
+         function sendFriendRequest(friend_id)
+         {
+
+       	  console.log("->sendFriendRequest :"+friend_id)
+             friendservice.sendFriendRequest(friend_id)
+                 .then(
+                              function(d) {
+                                   self.friend = d;
+                                   
+                                  alert("Friend Request : " + self.friend.errormessage)
+                              },
+                               function(errResponse){
+                                   console.error('Error while sending friend request');
+                               }
+                      );
+         
+        	 
+         }
+          
+             
+          self.getMyFriends = function(){
+        	  console.log("Getting my friends")
+              friendservice.getMyFriends()
+                  .then(
+                               function(d) {
+                                    self.friends = d;
+                                    console.log("Got the friends list"+ self.friends)
+                                     	/* $location.path('/view_friend');*/
+                               },
+                                function(errResponse){
+                                    console.error('Error while fetching Friends');
+                                }
+                       );
+          };
+            
+       
+         self.updateFriendRequest = function(friend, id){
+              friendservice.updateFriendRequest(friend, id)
+                      .then(
+                              self.fetchAllFriends, 
+                              function(errResponse){
+                                   console.error('Error while updating Friend.');
+                              } 
+                  );
+          };
+ 
+         self.acceptFriendRequest = function(id){
+              friendservice.acceptFriendRequest(id)
+                      .then(
+                              self.fetchAllFriends, 
+                              function(errResponse){
+                                   console.error('Error while acceptFriendRequest');
+                              } 
+                  );
+          };
+          
+          self.rejectFriendRequest = function(id){
+              friendservice.rejectFriendRequest(id)
+                      .then(
+                              self.fetchAllFriends, 
+                              function(errResponse){
+                                   console.error('Error while rejectFriendRequest');
+                              } 
+                  );
+          };
+          
+          self.unFriend = function(id){
+              friendservice.unFriend(id)
+                      .then(
+                              self.fetchAllFriends, 
+                              function(errResponse){
+                                   console.error('Error while unFriend ');
+                              } 
+                  );
+          };
+          
+          self.fetchAllUsers = function() {
+				userservice.fetchAllUsers().then(function(d) {
+					self.users = d;
+				}, function(errResponse) {
+					console.error('Error while fetching Users');
+				});
+			};
+            
+ 
+          self.fetchAllUsers();
+          self.getMyFriends();
+ 
+     
+ 
+      }]);

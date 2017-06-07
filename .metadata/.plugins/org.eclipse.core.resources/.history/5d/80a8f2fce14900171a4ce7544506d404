@@ -1,0 +1,179 @@
+package com.niit.collobration.DAOimpl;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.niit.collobration.model.Friend;
+@Transactional
+@EnableTransactionManagement
+@Repository("friendDAO")
+public class FriendDAOimpl implements com.niit.collobration.DAO.FriendDAO
+{
+	private static final Logger log = LoggerFactory.getLogger(UserDAOimpl.class);	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	private FriendDAOimpl(SessionFactory sessionFactory)
+	{
+		this.sessionFactory=sessionFactory;
+	}
+	
+	public boolean save(Friend friend) {
+
+		try {
+			sessionFactory.getCurrentSession().save(friend);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	public boolean update(Friend friend) {
+
+		try {
+			log.debug("Starting of the method update");
+			sessionFactory.getCurrentSession().update(friend);
+			log.debug("Successfully updated");
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.debug("Not able to update the status");
+			return false;
+		}
+
+	}
+
+	@Transactional
+	public void delete(String userid, String friend_id) {
+		Friend friend = new Friend();
+		friend.setFriend_id(friend_id);
+		friend.setUserid(userid);
+		sessionFactory.openSession().delete(friend);
+	}
+	
+	/**
+	 * get the friends who are already accepcted
+	 */
+
+	@Transactional
+	public List<Friend> getMyFriends(String userid) {
+		/*
+		 * select user_id from c_friend where user_id='Srinivas' and status ='A'
+		 * UNION select friend_id from c_friend where user_id='Srinivas' and
+		 * status ='A' MINUS select user_id from c_friend where
+		 * user_id='Srinivas';
+		 */
+		String hql1 = "select friend_id  from Friend where userid='" + userid + "' and status = 'A' ";
+
+				/*+ " union  " +*/
+
+		String hql2= "select userid from Friend where friend_id='" + userid + "' and status = 'A'";
+
+		log.debug("getMyFriends hql1 : " + hql1);
+		log.debug("getMyFriends hql2 : " + hql2);
+	
+		List<Friend> list1 = sessionFactory.openSession().createQuery(hql1).list();
+		List<Friend> list2 = sessionFactory.openSession().createQuery(hql2).list();
+		
+		
+		
+		list1.addAll(list2);
+
+		return list1;
+
+	}
+
+	@Transactional
+	public List<Friend> getNewFriendRequests(String friend_id) {
+		String hql = "select userid from Friend where friend_id=" + "'" + friend_id + "' and status ='" + "P'";
+
+		log.debug(hql);
+		 return  sessionFactory.openSession().createQuery(hql).list();
+
+	
+
+	}
+	
+	
+	@Transactional
+	public List<Friend> getRequestsSendByMe(String userid) {
+		String hql = "select friend_id from Friend where userid=" + "'" + userid + "' and status ='" + "P'";
+
+		log.debug(hql);
+		return  sessionFactory.openSession().createQuery(hql).list();
+
+	}
+
+
+	@Transactional
+	public Friend get(String userid, String friend_id) {
+		String hql = "from Friend where userid=" + "'" + userid + "' and friend_id= '" + friend_id + "'";
+
+		log.debug("hql: " + hql);
+		Query query = sessionFactory.openSession().createQuery(hql);
+
+		return (Friend) query.uniqueResult();
+
+	}
+	@Transactional
+	public Friend get(String userid)
+	{
+		String hql = "from Friend where userid=" + "'" + userid + "' or friend_id= '" + userid + "'";
+
+		log.debug("hql: " + hql);
+		Query query = sessionFactory.openSession().createQuery(hql);
+
+		return (Friend) query.uniqueResult();
+
+	}
+
+	// We can use update method also.
+	// isOnline need to set in controller and the ncal update
+
+	/**
+	 * Instead of writing the below two methods, you can use update method
+	 */
+
+	@Transactional
+	public void setOnline(String friend_id) {
+		log.debug("Starting of the metnod setOnline");
+		//String hql = " UPDATE Friend	SET isOnline = 'Y' where friendID='" + friendID + "'";
+		
+		String hql = " UPDATE Friend	SET isonline = 'Y' where friend_id= ?";
+		
+		
+		
+		
+		log.debug("hql: " + hql);
+		Query query = sessionFactory.openSession().createQuery(hql);
+		query.setString(0, friend_id);
+		
+		query.executeUpdate();
+		log.debug("Ending of the metnod setOnline");
+
+	}
+
+	@Transactional
+	public void setOffLine(String friend_id) {
+		log.debug("Starting of the metnod setOffLine");
+		String hql = " UPDATE Friend	SET isonline = 'N' where friend_id='" + friend_id + "'";
+		log.debug("hql: " + hql);
+		Query query = sessionFactory.openSession().createQuery(hql);
+		query.executeUpdate();
+		log.debug("Ending of the metnod setOffLine");
+
+	}
+
+}

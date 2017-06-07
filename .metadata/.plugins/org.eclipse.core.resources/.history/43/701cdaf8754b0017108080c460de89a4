@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="jobcontroller as ctrl" >
+<div ng-hide="jobs.length"><center><h1>No jobs To Display</h1></center><a href="#/postjob"  class="btn btn-success">POST JOB</a></div>
+<div ng-controller="jobapplicationcontroller as jctrl">
+<div ng-show="jobs.length">
+<div class="row">
+<a href="#/postjob"  class="btn btn-success">POST JOB</a>
+<div ng-repeat="job in jobs">
+    <div class="col-xs-12 col-md-12">
+      <div class="thumbnail">
+          <div class="caption">
+          <center><b><h1>{{job.title}}</h1></b></center>
+          <h4 align="left">postedby : {{job.userid}}</h4>										
+          <h4 align="right">POST : {{job.post}}</h4>
+          <h4 align="left">salary : {{job.salary}}</h4>
+          <h4 align="left">companyname: {{job.companyname}}</h4>
+          <a ng-show="currentUser.id" href="#/applyjob" ng-click="jctrl.apply(job.id)" class="btn btn-success">APPLY</a>
+          <a ng-if="currentUser.id==job.userid" href="#" ng-click="jctrl.displayByJobId(job.id)" class="btn btn-success">APPLIED CANDIDATES</a>
+          <a ng-show="currentUser.id" href="#/" ng-click="ctrl.update(job.id)" class="btn btn-primary">EDIT </a>
+          <a ng-show="currentUser.id" href="#/" ng-click="ctrl.remove(job.id)" class="btn btn-success">DELETE </a>
+          </div>
+          </div>
+          </div>
+    </div>
+    </div>
+ </div>
+</div>
+</div>
+</body>
+</html>

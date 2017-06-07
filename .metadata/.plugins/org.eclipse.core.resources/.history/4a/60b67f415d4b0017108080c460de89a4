@@ -1,0 +1,184 @@
+app.controller('jobcontroller',['$scope','jobservice','$location','$rootScope','$cookieStore','$http',
+						function($scope, jobservice, $location, $rootScope,$cookieStore, $http)
+						{
+							console.log("inside jobController...")
+						//	
+							this.job = {
+								id : '',
+								title: '',
+								description : '',
+								salary : '',
+								post : '',
+								status : '',
+								userid : '',
+								companyname : '',
+								
+							};
+							
+						
+								this.jobs = [];
+								
+								this.createjob = function(job) {
+									console.log("createjob...")
+									jobservice.createjob(job)
+											.then(
+													function(d) 
+													{
+														if(d.errorcode==200)
+														{
+														alert("job created succesfully")
+														$location.path("/")
+														}
+														else if(d.errorcode==404)
+															{
+															alert("job not created please try again")
+															$location.path("/")
+															}
+													},
+													function(errResponse) {
+														console
+																.error('Error while creating job.');
+													});
+								};
+								this.submit = function() {
+									{
+										console.log('Saving New job', this.job);
+										this.createjob(this.job);
+									}
+								};
+								
+								this.fetchalljobs = function()
+								{
+									console.log("fetchalljobs...")
+									jobservice
+											.fetchalljobs()
+											.then(
+													function(d) {
+														$rootScope.jobs=d;
+														$location.path("/showalljobs")
+													},
+													function(errResponse) {
+														console.error('Error while fetching jobs');
+													});
+								};
+								
+								this.deleteJob = function(job) {
+									console.log("deleteJob!")
+									jobservice.deletejob(job)
+									.then(
+											function(d) 
+											{
+												this.job=d;
+												if(this.job.errorCode==200)
+												{
+													jobservice.fetchalljobs()
+													.then(
+															function(d)
+															{
+																this.jobs=d;
+																$rootScope.jobs=d;
+																console.log(this.jobs)
+															}
+													)
+													alert("Thank You Job Deleted Successfully!!!")
+													$location.path("/displayJobs")
+												}
+												else if(this.job.errorCode==400)
+												{
+													alert("User Not Logged In Please Log In First To Delete Job")
+													$location.path("/login")
+												}
+												else if(this.job.errorCode==404)
+												{
+													alert("No Such Job Exists")
+													$location.path("/")
+												}
+												else if(this.job.errorCode==500)
+												{
+													alert("This Job Is Not Created By You So You Cannot Delete This Job")
+													
+													$location.path("/")
+												}
+												
+											},
+											function(errResponse)
+											{
+													console.error('Error while deleting Job.');
+										});
+									};
+								this.remove = function(job) {
+									{
+										this.job.id=job;
+										console.log('Deleting Job', this.job.id);
+										this.deleteJob(this.job.id);
+									}
+								};
+								
+								this.update = function(job) {
+									this.job.id=job;
+									console.log('Update job', this.job.id);
+									jobservice.fetchJobById(job)
+									.then(
+										function(d) 
+										{
+											this.job=d;
+											$rootScope.job=d;
+											console.log(this.job)
+											$location.path('/editJob')
+										},
+										function(errResponse) 
+										{
+												console.error('Error while Fetching Job.');
+									});
+								}
+								this.updateJob = function(job) {
+									console.log("updateJob!")
+									this.job.id=$rootScope.job.id
+									jobservice.updatejob(job)
+									.then(
+											function(d) 
+											{
+												this.job=d;
+												if(this.job.errorCode==200)
+												{
+													jobservice.fetchalljobs()
+													.then(
+															function(d)
+															{
+																this.jobs=d;
+																$rootScope.jobs=d;
+																console.log(this.jobs)
+															}
+													)
+													alert("Thank You Job Updated Successfully!!!")
+													$location.path("/displayJobs")
+												}
+												else if(this.job.errorCode==400)
+												{
+													alert("User Not Logged In Please Log In First To Update Job")
+													$location.path("/login")
+												}
+												else if(this.job.errorCode==404)
+												{
+													alert("Error Updating Job Please Try Again")
+													$location.path("/editJob")
+												}
+												else if(this.job.errorCode==500)
+												{
+													alert("This Job Is Not Created By You So You Cannot Update This Job")
+													$location.path("/")
+												}
+												
+											},
+											function(errResponse) 
+											{
+													console.error('Error while updating Job.');
+										});
+									};
+								this.edit = function(){
+									console.log('Updating Posted Job', $rootScope.job);
+									this.updateJob($rootScope.job)
+								}
+
+
+						} ]);

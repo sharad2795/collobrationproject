@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="jobcontroller as ctrl">
+	<div ng-hide="jobs.length">
+		<center>
+			<h1>You Don't Have Any jobs In Your List Please Add One</h1>
+			<a href="#" ng-click="ctrl.fetchPendingFriends()" class="btn btn-success">Friend Requests</a>
+			<a href="#/postjob"  class="btn btn-success">POST JOB</a>
+		</center>
+	</div>
+	</div>
+
+
+</body>
+</html>

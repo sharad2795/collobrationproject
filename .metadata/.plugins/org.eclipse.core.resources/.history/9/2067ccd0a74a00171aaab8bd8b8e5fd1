@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+  <h4>Post a Job</h4>
+ <div class="col col-md-2"></div>
+    <div class="col col-md-8">
+  <form>
+  <div class="form-group required">
+    <label for="exampleInputEmail1" class='control-label'>Job Title</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ex: Senior Mobile Developer">
+    <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+  </div>
+  <div class="form-group required">
+    <label for="exampleInputPassword1" class='control-label'>post</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ex:Hyderabad">
+  </div>
+
+  <div class="form-group required">
+    <label for="exampleTextarea" class='control-label'>Job Description</label>
+    <textarea class="form-control" id="exampleTextarea" rows="7"></textarea>
+  </div>
+  <div class="form-group required">
+    <label for="exampleInputPassword1" class='control-label'>Company Name</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ex:Infosys">
+  </div>
+  <div class="form-group required">
+    <label for="exampleInputPassword1" class='control-label'>salary</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ex:Infosys">
+  </div>
+  
+    <ul class="media-date text-uppercase reviews list-inline">
+    <li class="aaaa"><button type="submit" class="btn btn-success">Publish</button></li>
+  </ul>
+</form>
+</div>
+  <div class="col col-md-2"></div>
+
+</div>
+</div>
+</body>
+</html>

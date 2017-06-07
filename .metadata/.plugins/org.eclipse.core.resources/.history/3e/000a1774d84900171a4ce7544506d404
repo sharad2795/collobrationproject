@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="lib/angularjs/angular.js"></script>
+<script src="lib/angularjs/stomp.js"></script>
+<script src="lib/angularjs/sockjs.js"></script>
+<script src="lib/angularjs/angular-cookies.js"></script>
+<script src="lib/angularjs/angular-route.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body ng-app="myApp" background="http://habrastorage.org/files/c9c/191/f22/c9c191f226c643eabcce6debfe76049d.jpg">
+<div ng-include="'common/header.html'"></div>
+<!-- Controller -->
+<script src="js/app.js"></script>
+<script type="text/javascript" src="controllers/usercontroller.js"></script>
+<script type="text/javascript" src="controllers/blogcontroller.js"></script>
+<script type="text/javascript" src="controllers/Chatcontroller.js"></script>
+<script type="text/javascript" src="controllers/forumcontroller.js"></script>
+<script type="text/javascript" src="controllers/friendcontroller.js"></script>
+
+<script type="text/javascript" src="service/userservice.js"></script>
+<script type="text/javascript" src="service/blogservice.js"></script>
+<script type="text/javascript" src="service/Chatservice.js"></script>
+<script type="text/javascript" src="service/forumservice.js"></script>
+<script type="text/javascript" src="service/friendservice.js"></script>
+<div ng-view></div>
+<div ng-include="'common/footer.html'"></div>
+</body>
+</html>

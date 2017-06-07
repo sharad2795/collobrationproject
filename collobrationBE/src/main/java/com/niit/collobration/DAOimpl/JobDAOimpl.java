@@ -12,6 +12,7 @@ import com.niit.collobration.DAO.JobDAO;
 import com.niit.collobration.model.Job;
 @EnableTransactionManagement
 @Repository("jobDAO")
+@Transactional
 public class JobDAOimpl implements JobDAO
 {
 
@@ -57,7 +58,7 @@ public boolean update(Job job)
 
 }
 @Transactional
-public Job getjobbyid(String id) 
+public Job getjobbyid(int id) 
 {
 	return (Job) sessionFactory.getCurrentSession().get(Job.class, id);
 
@@ -73,6 +74,14 @@ public boolean delete(Job job)
 		e.printStackTrace();
 		return false;
 	}
+}
+public List<Job> getjobbyuserid(String userid) {
+	return sessionFactory.getCurrentSession().createQuery("from Job where userid='"+userid+"'").list();
+}
+public List<Job> getavailablejobs() 
+{
+	return sessionFactory.getCurrentSession().createQuery("from Job where status='available'").list();
+
 }
 
 

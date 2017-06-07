@@ -6,13 +6,24 @@ import com.niit.collobration.model.Friend;
 
 public interface FriendDAO 
 {
-	public List<Friend> list();
+	public List<Friend> fetchAllFriends();
 	
-	public boolean save(Friend friend);
+	public List<Friend> fetchAllApprovedFriends(String userid);
 	
-	public boolean delete(Friend friend);
+	public List<Friend> fetchAllPendingFriends(String friend_id);
 	
-	public Friend fetchfriendsbyid(int id);
+	public List<Friend> fetchAllPendingFriendsByUserid(String userid);
 	
-	public List<Friend> fetchfriendbyuserid(String userid);
+	public List<Friend> fetchAllRejectFriends(String userid);
+	
+	public List<Friend> fetchAllFriendsByUserId(String id);
+	
+	public Friend getFriendById(int id);
+	
+	public Boolean saveFriend(Friend friend);
+	
+	public Boolean updateFriend(Friend friend);
+	
+	public Boolean deleteFriend(Friend friend);		
+
 }

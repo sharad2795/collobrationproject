@@ -13,13 +13,52 @@ import com.niit.collobration.BaseDomain.BaseDomain;
 public class Job extends BaseDomain
 {
 	@Id
-	private String id;
+	private int id;
+
+	private String title;
 	
-	public String getId() {
+	private String description;
+	
+	private String companyname;
+
+
+	private String userid;
+	
+	private int salary;
+	
+	private String post;
+	
+	private String status;
+
+	
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public int getSalary() {
+		return salary;
+	}
+
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -47,11 +86,13 @@ public class Job extends BaseDomain
 		this.companyname = companyname;
 	}
 
-	private String title;
-	
-	private String description;
-	
-	private String companyname;
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 	
 }

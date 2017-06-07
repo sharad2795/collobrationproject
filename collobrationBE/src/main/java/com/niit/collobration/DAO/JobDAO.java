@@ -12,9 +12,13 @@ public interface JobDAO
 	
 	public boolean update(Job job);
 	
-	public Job getjobbyid(String id);
+	public Job getjobbyid(int id);
 	
 	public boolean delete(Job job);
+	
+	public List<Job> getjobbyuserid(String userid);
+	
+	public List<Job> getavailablejobs();
 	
 
 	

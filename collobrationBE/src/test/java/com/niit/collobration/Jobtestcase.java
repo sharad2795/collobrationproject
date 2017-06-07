@@ -35,7 +35,7 @@ public class Jobtestcase {
 	//@Test
 		public void createjobTestCase()
 		{
-			job.setId("01");
+			job.setId(01);
 			job.setTitle("softwareengineers");
 			job.setDescription("expereience 1 year,salary:20k");
 			job.setCompanyname("INFOSYS");
@@ -48,7 +48,7 @@ public class Jobtestcase {
 	
 		public void updatejob()
 		{
-			job.setId("01");
+			job.setId(01);
 			job.setTitle("softwareengineers");
 			job.setDescription("expereience 2 year,salary:20k");
 			job.setCompanyname("INFOSYS");
@@ -60,7 +60,7 @@ public class Jobtestcase {
 	//@Test
 	public void deletejob()
 	{
-		jobDAO.getjobbyid("01");
+		jobDAO.getjobbyid(01);
 		boolean flag= jobDAO.delete(job);
 		assertEquals("deletejob",true, flag);
 	
@@ -69,7 +69,7 @@ public class Jobtestcase {
 	@Test
 	public void list()
 	{
-		jobDAO.getjobbyid("01");
+		jobDAO.getjobbyid(01);
 		boolean flag = jobDAO.list()!=null;
 		assertEquals("list", true, flag);
 	}
